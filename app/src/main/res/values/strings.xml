@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">JetCompInsta</string>
     <string name="logo">logo</string>
+    <string name="social_login_fb">Social login fb</string>
 </resources>
