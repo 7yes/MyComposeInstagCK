@@ -1,6 +1,7 @@
 package com.example.jetcompinsta
 
 import android.app.Activity
+import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -104,9 +106,15 @@ fun Body(modifier: Modifier) {
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(16.dp))
-        Email(email) { email = it }
+        Email(email) {
+            email = it
+            isLoginEnabled = enableLogin(email, password)
+        }
         Spacer(modifier = Modifier.size(8.dp))
-        Password(password) { password = it }
+        Password(password) {
+            password = it
+            isLoginEnabled = enableLogin(email, password)
+        }
         Spacer(modifier = Modifier.size(8.dp))
         ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
@@ -167,11 +175,23 @@ fun LoginDivider() {
 
 @Composable
 fun LoginButton(isLoginEnabled: Boolean) {
-    Button(onClick = { }, enabled = isLoginEnabled, modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Log In")
-
+    Button(
+        onClick = { },
+        enabled = isLoginEnabled,
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF78C8F9),
+            disabledContainerColor = Color(0xFFF4EAE9),
+            contentColor = Color.White,
+            disabledContentColor = Color.White
+        )
+    ) {
+        Text(text = stringResource(R.string.log_in))
     }
+}
 
+fun enableLogin(email: String, password: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length > 6
 }
 
 @Composable
@@ -208,12 +228,12 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
                 Icons.Filled.MailOutline
             }
             IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
-             //   androidx.compose.material3.Icon(painter = Icons.Default.Add, contentDescription = "d")
+                //   androidx.compose.material3.Icon(painter = Icons.Default.Add, contentDescription = "d")
             }
         },
-        visualTransformation = if(passwordVisibility){
+        visualTransformation = if (passwordVisibility) {
             VisualTransformation.None
-        }else{
+        } else {
             PasswordVisualTransformation()
         }
     )
