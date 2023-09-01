@@ -1,7 +1,6 @@
 package com.example.jetcompinsta
 
 import android.app.Activity
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,9 +49,38 @@ fun LoginScreen() {
     ) {
         Header(Modifier.align(Alignment.TopEnd))
         Body(Modifier.align(Alignment.Center))
+        Footer(Modifier.align(Alignment.BottomCenter))
     }
 }
 
+@Composable
+fun Footer(modifier: Modifier) {
+Column(modifier = modifier.fillMaxWidth()) {
+    Divider(
+        Modifier
+            .background(Color(0xF9F9F9))
+            .height(1.dp)
+            .fillMaxWidth())
+    Spacer(modifier = Modifier.size(24.dp))
+    SingUp()
+    Spacer(modifier = Modifier.size(16.dp))
+}
+}
+
+@Composable
+fun SingUp(){
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Text(text = stringResource(R.string.don_t_have_an_account),
+            color = Color(0xFFB5B5B5),
+            modifier = Modifier.padding(horizontal =  4.dp),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold )
+        Text(text = stringResource(R.string.sign_up),
+            color = Color(0xFF4EA8E9),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold )
+    }
+}
 @Composable
 fun Body(modifier: Modifier) {
     var email by rememberSaveable { mutableStateOf("") }
@@ -89,7 +117,7 @@ fun SocialLogin() {
             modifier = Modifier.size(16.dp)
         )
         Text(
-            text = "Continue as Dave Johnson ",
+            text = stringResource(R.string.continue_as_dave_johnson),
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(20.dp),
